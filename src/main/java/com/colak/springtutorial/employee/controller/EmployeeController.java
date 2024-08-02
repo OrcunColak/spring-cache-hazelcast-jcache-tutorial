@@ -1,6 +1,7 @@
 package com.colak.springtutorial.employee.controller;
 
 
+import com.colak.springtutorial.config.CacheConfiguration;
 import com.colak.springtutorial.employee.dto.EmployeeDTO;
 import com.colak.springtutorial.employee.jpa.Employee;
 import com.colak.springtutorial.employee.mapstruct.EmployeeMapper;
@@ -29,7 +30,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/employee")
 
-@CacheDefaults(cacheName = "employees")
+@CacheDefaults(cacheName = CacheConfiguration.EMPLOYEE_CACHE_NAME)
 public class EmployeeController {
 
     private final EmployeeService employeeService;
