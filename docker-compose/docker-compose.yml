@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  hazelcast:
+    container_name: hazelcast
+    ports:
+      - '5701:5701'
+    image: 'hazelcast/hazelcast'
+    environment:
+      HZ_JET_ENABLED: 'true'
+      HZ_JET_RESOURCEUPLOADENABLED: 'true'
+      HAZELCAST_CONFIG : hz.yml
+    volumes:
+      - ./hazelcast.yaml:/opt/hazelcast/hz.yml
+  
+  # http://localhost:9090
+  management-center:
+    image: 'hazelcast/management-center'
+    ports:
+      - "9090:8080"
+    environment:
+      - MC_DEFAULT_CLUSTER=dev
+      - MC_DEFAULT_CLUSTER_MEMBERS=hazelcast

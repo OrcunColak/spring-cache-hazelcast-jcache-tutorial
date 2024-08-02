@@ -1,0 +1,4 @@
+hazelcast:
+  cache:
+    employees:
+      management-enabled: true
