@@ -3,11 +3,9 @@ package com.colak.springtutorial.employee.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
-public class EmployeeDTO implements Serializable {
+public class EmployeeDTO {
 
     private Long id;
 

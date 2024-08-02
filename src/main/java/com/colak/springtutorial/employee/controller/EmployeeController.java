@@ -2,6 +2,7 @@ package com.colak.springtutorial.employee.controller;
 
 
 import com.colak.springtutorial.employee.dto.EmployeeDTO;
+import com.colak.springtutorial.employee.jpa.Employee;
 import com.colak.springtutorial.employee.mapstruct.EmployeeMapper;
 import com.colak.springtutorial.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheKey;
+import javax.cache.annotation.CachePut;
 import javax.cache.annotation.CacheRemove;
 import javax.cache.annotation.CacheResult;
+import javax.cache.annotation.CacheValue;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -29,6 +34,19 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+
+    @PostMapping("/update/{id}")
+    @CachePut
+    public EmployeeDTO update(@PathVariable @CacheKey Long id, @RequestBody @CacheValue EmployeeDTO employeeDTO) {
+        log.info("update is called with : {}", employeeDTO);
+
+        // saving employee into db
+        Employee employee = EmployeeMapper.INSTANCE.dtoToEmployee(employeeDTO);
+
+        employeeService.save(employee);
+
+        return EmployeeMapper.INSTANCE.employeeToDto(employee);
+    }
 
     // http://localhost:8080/api/employee/findById/1
     @GetMapping(path = "/findById/{id}")
