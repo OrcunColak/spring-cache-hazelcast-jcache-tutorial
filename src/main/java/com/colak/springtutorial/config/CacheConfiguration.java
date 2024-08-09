@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CacheConfiguration {
 
-    // Use a different cache name from hazelcast server. This is just for testing
+    // Use a different cache name from hazelcast server. This is just for testing to see that the Cache is created
     public static final String EMPLOYEE_CACHE_NAME = "my-employees";
 
     @Bean
@@ -51,6 +51,9 @@ public class CacheConfiguration {
         MutableConfiguration<Long, EmployeeDTO> mutableConfiguration = new MutableConfiguration<>();
         mutableConfiguration.setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.MINUTES, 1)));
         mutableConfiguration.setTypes(Long.class, EmployeeDTO.class);
+
+        mutableConfiguration.setStatisticsEnabled(true);
+        mutableConfiguration.setManagementEnabled(true);
 
         return mutableConfiguration;
     }

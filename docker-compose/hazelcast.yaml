@@ -1,4 +1,9 @@
 hazelcast:
   cache:
     employees:
+      key-type:
+        class-name: java.lang.Long
+      value-type:
+        class-name: java.lang.Object
+      statistics-enabled: true
       management-enabled: true

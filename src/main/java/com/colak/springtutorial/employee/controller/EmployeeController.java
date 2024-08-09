@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/employee")
 
-@CacheDefaults(cacheName = CacheConfiguration.EMPLOYEE_CACHE_NAME)
+@CacheDefaults(cacheName = "employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
